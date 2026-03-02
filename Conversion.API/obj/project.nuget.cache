@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mpnjuVhX4TY=",
+  "dgSpecHash": "pbCvEvC8po0=",
   "success": true,
   "projectFilePath": "/Users/giresse/Documents/conersion/Conversion.API/Conversion.API.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "/Users/giresse/.nuget/packages/microsoft.entityframeworkcore.abstractions/10.0.3/microsoft.entityframeworkcore.abstractions.10.0.3.nupkg.sha512",
     "/Users/giresse/.nuget/packages/microsoft.entityframeworkcore.analyzers/10.0.3/microsoft.entityframeworkcore.analyzers.10.0.3.nupkg.sha512",
     "/Users/giresse/.nuget/packages/microsoft.entityframeworkcore.design/10.0.3/microsoft.entityframeworkcore.design.10.0.3.nupkg.sha512",
+    "/Users/giresse/.nuget/packages/microsoft.entityframeworkcore.inmemory/10.0.3/microsoft.entityframeworkcore.inmemory.10.0.3.nupkg.sha512",
     "/Users/giresse/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.3/microsoft.entityframeworkcore.relational.10.0.3.nupkg.sha512",
     "/Users/giresse/.nuget/packages/microsoft.extensions.dependencymodel/10.0.3/microsoft.extensions.dependencymodel.10.0.3.nupkg.sha512",
     "/Users/giresse/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512",

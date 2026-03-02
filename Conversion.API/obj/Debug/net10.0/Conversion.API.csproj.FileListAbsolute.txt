@@ -242,3 +242,5 @@
 /Users/giresse/Documents/conersion/Conversion.API/obj/Debug/net10.0/Conversion.API.pdb
 /Users/giresse/Documents/conersion/Conversion.API/obj/Debug/net10.0/Conversion.API.genruntimeconfig.cache
 /Users/giresse/Documents/conersion/Conversion.API/obj/Debug/net10.0/ref/Conversion.API.dll
+/Users/giresse/Documents/conersion/Conversion.API/obj/Debug/net10.0/Conversion.API.sourcelink.json
+/Users/giresse/Documents/conersion/Conversion.API/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll
