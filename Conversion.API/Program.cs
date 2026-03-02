@@ -24,9 +24,13 @@ builder.Services.AddCors(options =>
 });
 
 
-// DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// DbContext : InMemory en environnement Testing (tests d'intégration), sinon PostgreSQL
+if (builder.Environment.IsEnvironment("Testing"))
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseInMemoryDatabase("ConversionTestDb"));
+else
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Repositories
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddScoped<IConversionResultRepository, ConversionResultRepository>();
@@ -45,7 +49,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-if (!app.Environment.IsDevelopment())
+// Pas de redirection HTTPS en Development ni en Testing (évite le warning dans les tests).
+if (!app.Environment.IsDevelopment() && !app.Environment.IsEnvironment("Testing"))
 {
     app.UseHttpsRedirection();
 }
@@ -55,11 +60,12 @@ app.UseCors("AllowReactApp");
 app.MapControllers();
 
 
-// Applique les migrations automatiquement
+// Applique les migrations automatiquement (sauf en environnement Testing pour les tests d'intégration)
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    if (!app.Environment.IsEnvironment("Testing"))
+        db.Database.Migrate();
 }
 
 app.Run();
