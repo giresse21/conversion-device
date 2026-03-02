@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+
+  # ============================================
+  # Base de données PostgreSQL
+  # ============================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: conversion-postgres
+    environment:
+      POSTGRES_DB: conversiondb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5434:5432"  # 5433 local → 5432 container
+                     # évite conflit avec PostgreSQL local
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d conversiondb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # Backend .NET
+  # ============================================
+  api:
+    build:
+      context: ./Conversion.API
+      dockerfile: Dockerfile
+    container_name: conversion-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5120
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=conversiondb;Username=postgres;Password=root
+    ports:
+      - "5120:5120"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # Lance les migrations automatiquement au démarrage
+    command: >
+      sh -c "
+        dotnet Conversion.API.dll
+      "
+
+  # ============================================
+  # Frontend React
+  # ============================================
+  frontend:
+    build:
+      context: ./conversion-front
+      dockerfile: Dockerfile
+    container_name: conversion-frontend
+    ports:
+      - "3001:80"  # 3001 local → 80 container (Nginx)
+    depends_on:
+      - api
+
+# ============================================
+# Volumes persistants
+# ============================================
+volumes:
+  postgres_data:
