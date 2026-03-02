@@ -70,3 +70,4 @@ jobs:
         run: docker build -t conversion-api ./Conversion.API
 
       - name: Build Frontend Docker image
+        run: docker build -t conversion-frontend ./conversion-front
